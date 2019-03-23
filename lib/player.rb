@@ -44,7 +44,7 @@ class Player
     if !deck.empty?
       fished_card = deck.take(1)
       puts "You fished a #{fished_card.to_s}!"
-      self.hand.add_cards(fished_card)
+      self.hand.add_cards([fished_card])
     else
       puts "The deck is empty and there are no cards to fish."
     end
@@ -55,7 +55,7 @@ class Player
   end
 
   def get_cards(value)
-    self.hand.retrieve_cards(value)
+    self.hand.remove_cards(value)
   end
 
   def check_for_book

@@ -12,7 +12,7 @@ class Game
     end
 
     def play
-        deck.shuffle!
+        deck.shuffle
         play_turn until game_over?
         end_game
     end
