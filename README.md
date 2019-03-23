@@ -1,4 +1,4 @@
-# Blackjack
+# Go Fish
 
 ## Rules
 
@@ -13,7 +13,6 @@
 bundle exec rspec spec/deck_spec.rb
 bundle exec rspec spec/hand_spec.rb
 bundle exec rspec spec/player_spec.rb
-bundle exec rspec spec/dealer_spec.rb
 ```
 
 * To run one specific spec, add `:line_number` at the end.  For example, `bundle exec rspec spec/deck_spec.rb:30`
@@ -23,15 +22,14 @@ bundle exec rspec spec/dealer_spec.rb
 
 ## Game Rules
 
-* Players play against the dealer; multiple players can win each
-  round.
-* Players win if they don't "bust" and either:
-    1. their hand is worth more points than the dealer's hand.
-    2. the dealer busts.
-* To compute a hand's value, add the value of each numbered card, and
-  ten for face cards. An ace is worth 11 if the total score would be
-  <= 21. If an ace value of 11 would result in a bust, it is worth 1.
-* A score of >21 is a bust.
-* Players are first dealt two cards; they can request additional cards
-  ("hit") until they pass ("stay") or bust.
-* The dealer must hit on a hand worth <17, otherwise he must stay.
+* This is a two player version of Go Fish. The real version of the game may have many more players. In that version of the game, the key things to note are that a player may request any rank of card from any other player on their turn, and they may continue to request any rank of card (including the one they just requested) from any other player (including one they have already requested from) so long as they successfully continue to make a 'catch'/receive one or more cards from a player on every request.
+* The goal of the game is to win the most sets of cards. A set of cards is any four of a kind of any value/rank of card, such as kings, jacks, 2s, etc.
+* Cards have ranks, with 2s having the lowest rank and Aces having the highest rank. Suits are not important in this game.
+* Each player is dealt seven cards (in this two-player version of the game - if there are more than three players, players are generally dealt five cards.).
+* A player can request any rank of card from the player, such as all the kings from another player's hand. If the other player has any of the rank of card requested, they must hand over all the cards they have of that rank. If they do not, they tell the requesting player to "Go fish" and that player draws one card from the deck and places it in their hand.
+* If a player successfully requests one or more cards from the other player, they are entitled to continue their turn and asking that player again for any rank of card. As long as a player successfully continues to request cards, their turn continues.
+* When a player successfully requests one or more cards (a 'catch'), they must reveal those cards to the other player.
+* When a player gets a full set of four cards, they place it on the table in front of them and play again.
+* Once a player fails to successfully make a catch/request a card from the other player and has to 'go fishing' for a card in the deck, their turn ends and the turn passes to the other player.
+* The game ends when all thirteen sets of cards have been claimed. The player with the most sets wins.
+* If at any point a player has no cards in their hand, they may draw a card from the deck and ask the other player for any cards of the same rank as the card they drew.
