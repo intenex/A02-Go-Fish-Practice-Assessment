@@ -9,18 +9,6 @@ class Hand
   def initialize(cards)
   end
 
-  def points
-  end
-
-  def busted?
-  end
-
-  def hit(deck)
-  end
-
-  def beats?(other_hand)
-  end
-
   def return_cards(deck)
   end
 
