@@ -30,5 +30,5 @@ bundle exec rspec spec/player_spec.rb
 * If a player successfully requests one or more cards from the other player, they are entitled to continue their turn and asking that player again for any rank of card. As long as a player successfully continues to request cards, their turn continues.
 * When a player gets a full book of four cards, they place it on the table in front of them and play again.
 * Once a player fails to successfully make a catch/request a card from the other player and has to 'go fishing' for a card in the deck, their turn ends and the turn passes to the other player.
-* The game ends when all thirteen books of cards have been claimed. The player with the most books wins.
+* The game ends when all thirteen books of cards have been claimed, or when there are no more cards in the deck and one of the players has an empty hand. The player with the most books wins.
 * If at any point a player has no cards in their hand, they may draw a card from the deck and ask the other player for any cards of the same rank as the card they drew.

@@ -2,11 +2,12 @@ require_relative 'hand'
 
 class Player
   attr_reader :name
-  attr_accessor :hand, :turn_over
+  attr_accessor :hand, :turn_over, :books
 
   def initialize(name)
     @name = name
     @turn_over = false
+    @books = 0
   end
 
   def request_cards(opponent)
@@ -40,5 +41,4 @@ class Player
   def reset_turn
     self.turn_over = true
   end
-
 end

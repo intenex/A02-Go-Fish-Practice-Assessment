@@ -7,12 +7,16 @@ class Hand
   attr_accessor :cards
 
   def initialize(cards)
+    @cards = cards
   end
 
-  def return_cards(deck)
+  def add_cards(cards)
+  end
+
+  def empty?
   end
 
   def to_s
-    @cards.join(",") + " (#{points})"
+    @cards.join(",") # unclear this works, test
   end
 end

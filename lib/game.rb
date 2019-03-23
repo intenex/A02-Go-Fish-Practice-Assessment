@@ -27,10 +27,14 @@ class Game
     end
 
     def game_over?
-        
+        self.deck.empty? && self.players.any? { |player| player.hand.empty? }
+    end
+
+    def winner
+        self.players.max_by { |player| player.books }
     end
 
     def end_game
+        puts "The game is over and the winner is #{winner.name}!"
     end
-
 end
