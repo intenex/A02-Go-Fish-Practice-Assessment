@@ -46,7 +46,7 @@ class Card
   end
 
   # Compares two cards to see if they're equal in value but not suit.
-  # verify this works
+  # verify this works, also likely don't actually need this
   def ==(other_card)
     return false if other_card.nil?
 

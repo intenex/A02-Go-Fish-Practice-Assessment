@@ -10,6 +10,9 @@ class Hand
     @cards = cards
   end
 
+  def has_rank?(value)
+  end
+
   def add_cards(cards)
   end
 

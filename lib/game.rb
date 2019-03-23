@@ -20,9 +20,10 @@ class Game
     def play_turn
         player = self.players[self.current_player]
         opponent = self.players[self.current_player + 1 % 2]
+        player.go_fish(self.deck) if player.hand.empty?
         player.request_cards(opponent) until player.turn_over?
         player.reset_turn
-        player.go_fish
+        player.go_fish(self.deck)
         self.switch_players
     end
 
