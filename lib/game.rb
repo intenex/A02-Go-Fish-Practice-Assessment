@@ -12,7 +12,7 @@ class Game
     end
 
     def play
-        deck.shuffle
+        deck.shuffle!
         play_turn until game_over?
         end_game
     end
@@ -23,6 +23,10 @@ class Game
         player.request_cards(opponent) until player.turn_over?
         player.reset_turn
         player.go_fish
+        self.switch_players
+    end
+
+    def switch_players
         self.current_player = (self.current_player + 1) % 2
     end
 

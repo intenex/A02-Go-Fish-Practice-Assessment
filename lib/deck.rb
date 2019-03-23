@@ -17,6 +17,9 @@ class Deck
   def take(n)
   end
 
+  def shuffle!
+  end
+
   # Returns an array of cards to the bottom of the deck.
   def return(cards)
   end

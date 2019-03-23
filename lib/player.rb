@@ -28,10 +28,14 @@ class Player
   end
 
   def get_cards(value)
-
+    self.hand.retrieve_cards(value)
   end
 
   def check_for_book
+    if self.hand.book?
+      self.hand.remove_book
+      self.books += 1
+    end
   end
 
   def turn_over?

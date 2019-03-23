@@ -13,6 +13,16 @@ class Hand
   def add_cards(cards)
   end
 
+  def retrieve_cards(value)
+
+  end
+
+  def remove_book
+  end
+
+  def book?
+  end
+
   def empty?
   end
 
