@@ -28,7 +28,6 @@ bundle exec rspec spec/player_spec.rb
 * Each player is dealt seven cards (in this two-player version of the game - if there are more than three players, players are generally dealt five cards.).
 * A player can request any rank of card from the player, such as all the kings from another player's hand. If the other player has any of the rank of card requested, they must hand over all the cards they have of that rank. If they do not, they tell the requesting player to "Go fish" and that player draws one card from the deck and places it in their hand.
 * If a player successfully requests one or more cards from the other player, they are entitled to continue their turn and asking that player again for any rank of card. As long as a player successfully continues to request cards, their turn continues.
-* When a player successfully requests one or more cards (a 'catch'), they must reveal those cards to the other player.
 * When a player gets a full set of four cards, they place it on the table in front of them and play again.
 * Once a player fails to successfully make a catch/request a card from the other player and has to 'go fishing' for a card in the deck, their turn ends and the turn passes to the other player.
 * The game ends when all thirteen sets of cards have been claimed. The player with the most sets wins.
