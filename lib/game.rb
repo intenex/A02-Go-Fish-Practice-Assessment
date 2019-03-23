@@ -5,9 +5,9 @@ class Game
     attr_reader :deck, :players
     attr_accessor :current_player
 
-    def initialize
+    def initialize(*names)
         @deck = Deck.new
-        @players = []
+        @players = [Player.new(names[0]), Player.new(names[1])]
         @current_player = 0
     end
 
@@ -43,4 +43,13 @@ class Game
     def end_game
         puts "The game is over and the winner is #{winner.name}!"
     end
+end
+
+def test
+  g = Game.new("Alice", "Bob")
+  g.play
+end
+
+if __FILE__ == $PROGRAM_NAME
+  test
 end
