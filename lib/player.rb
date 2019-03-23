@@ -15,16 +15,19 @@ class Player
     puts "Your turn, #{@name}. You have #{@books} books."
     puts "Your current hand: #{hand.to_s}"
     puts "Choose a rank of card to request, e.g. '2', 'J', 'K'"
-    rank = gets.chomp.upcase
-    valid_ranks = Card::VALUE_STRINGS.invert
-    guessed_rank = valid_ranks[rank]
-    self.check_for_errors(guessed_rank)
-    self.guessed_ranks << guessed_rank
-    received_cards = opponent.get_cards(guessed_rank)
-    self.handle_cards(received_cards)
+    handle_input(gets.chomp.upcase)
   rescue ArgumentError => e
     puts e
     retry
+  end
+
+  def handle_input(input)
+    valid_ranks = Card::VALUE_STRINGS.invert
+    guessed_rank = valid_ranks[input]
+    check_for_errors(guessed_rank)
+    guessed_ranks << guessed_rank
+    received_cards = opponent.get_cards(guessed_rank)
+    handle_cards(received_cards)
   end
 
   def check_for_errors(guessed_rank)
@@ -35,9 +38,9 @@ class Player
 
   def handle_cards(cards)
     if cards
-      self.hand.add_cards(cards)
-      self.check_for_book
-      self.hand.sort_cards
+      hand.add_cards(cards)
+      check_for_book
+      hand.sort_cards
       self.turn_over = true if self.all_cards_guessed?
     else
       self.turn_over = true
@@ -52,31 +55,31 @@ class Player
     if !deck.empty?
       fished_card = deck.take(1)
       puts "#{@name} fished a #{fished_card[0].to_s}!"
-      self.hand.add_cards(fished_card)
-      self.check_for_book
-      self.hand.sort_cards
+      hand.add_cards(fished_card)
+      check_for_book
+      hand.sort_cards
     else
       puts "The deck is empty and there are no cards to fish."
     end
   end
 
   def all_cards_guessed?
-    self.hand.cards.all? { |card| self.guessed_ranks.include?(card.value) }
+    hand.cards.all? { |card| guessed_ranks.include?(card.value) }
   end
 
   def get_cards(value)
-    self.hand.remove_cards(value)
+    hand.remove_cards(value)
   end
 
   def check_for_book
-    if self.hand.book?
-      self.hand.remove_book
-      self.books += 1
+    if hand.book?
+      hand.remove_book
+      books += 1
     end
   end
 
   def turn_over?
-    self.turn_over
+    turn_over
   end
 
   def reset_turn

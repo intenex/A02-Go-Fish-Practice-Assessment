@@ -1,6 +1,5 @@
 require_relative 'player'
 require_relative 'deck'
-require 'byebug'
 
 class Game
     attr_reader :deck, :players
@@ -20,26 +19,26 @@ class Game
     end
 
     def play_turn
-        player = self.players[self.current_player]
-        opponent = self.players[(self.current_player + 1) % 2]
-        player.go_fish(self.deck) if player.hand.empty?
+        player = players[current_player]
+        opponent = players[(current_player + 1) % 2]
+        player.go_fish(deck) if player.hand.empty?
         player.request_cards(opponent) until player.turn_over?
         player.reset_turn
         player.reset_guesses
-        player.go_fish(self.deck)
-        self.switch_players
+        player.go_fish(deck)
+        switch_players
     end
 
     def switch_players
-        self.current_player = (self.current_player + 1) % 2
+        self.current_player = (current_player + 1) % 2
     end
 
     def game_over?
-        self.deck.empty? && self.players.any? { |player| player.hand.empty? }
+        deck.empty? && players.any? { |player| player.hand.empty? }
     end
 
     def winner
-        self.players.max_by { |player| player.books }
+        players.max_by { |player| player.books }
     end
 
     def end_game
