@@ -21,7 +21,7 @@ class Hand
   end
 
   def add_cards(cards)
-    cards.concat(cards)
+    self.cards.concat(cards)
   end
 
   def remove_cards(val)

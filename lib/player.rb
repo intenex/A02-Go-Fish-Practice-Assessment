@@ -15,13 +15,13 @@ class Player
     puts "Your turn, #{@name}. You have #{@books} books."
     puts "Your current hand: #{hand.to_s}"
     puts "Choose a rank of card to request, e.g. '2', 'J', 'K'"
-    handle_input(gets.chomp.upcase)
+    handle_input(gets.chomp.upcase, opponent)
   rescue ArgumentError => e
     puts e
     retry
   end
 
-  def handle_input(input)
+  def handle_input(input, opponent)
     valid_ranks = Card::VALUE_STRINGS.invert
     guessed_rank = valid_ranks[input]
     check_for_errors(guessed_rank)
@@ -74,7 +74,7 @@ class Player
   def check_for_book
     if hand.book?
       hand.remove_book
-      books += 1
+      self.books += 1
     end
   end
 
