@@ -5,22 +5,40 @@ class Player
   attr_accessor :hand, :turn_over
 
   def initialize(name)
+    @name = name
     @turn_over = false
   end
 
-  def return_cards(deck)
-  end
-
-  def request_card(opponent)
-    puts "Choose a rank of card to request"
+  def request_cards(opponent)
+    puts "Choose a rank of card to request, e.g. '2', 'J', 'K'"
     rank = gets.input.upcase
+    valid_values = Card::VALUE_STRINGS.invert
+    raise ArgumentError.new("Invalid value. Please try again.") unless valid_values[rank]
+    received_cards = opponent.get_cards(valid_values[rank])
+    if received_cards
+      self.hand.add_cards(received_cards)
+      self.check_for_book
+    else
+      self.turn_over = true
+    end
+  rescue => e
+    puts e
+    retry
   end
 
-  def check_for_set
+  def get_cards(value)
+
+  end
+
+  def check_for_book
   end
 
   def turn_over?
     self.turn_over
+  end
+
+  def reset_turn
+    self.turn_over = true
   end
 
 end
