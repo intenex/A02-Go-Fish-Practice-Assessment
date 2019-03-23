@@ -11,8 +11,8 @@ class Hand
     @cards = cards
   end
 
-  def has_rank?(value)
-
+  def has_rank?(val)
+    @cards.any? { |card| card.value == val }
   end
 
   def add_cards(cards)
@@ -27,7 +27,10 @@ class Hand
 
   def remove_book
     value_counter = self.count_values
-
+    book_value = value_counter.select { |value| value == 4 }
+    book_value.keys.each do |val|
+      self.cards.delete_if { |card| card.value == val }
+    end
   end
 
   def book?
