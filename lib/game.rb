@@ -23,6 +23,7 @@ class Game
         player.go_fish(self.deck) if player.hand.empty?
         player.request_cards(opponent) until player.turn_over?
         player.reset_turn
+        player.reset_guesses
         player.go_fish(self.deck)
         self.switch_players
     end

@@ -16,20 +16,28 @@ class Player
     rank = gets.input.upcase
     valid_ranks = Card::VALUE_STRINGS.invert
     guessed_rank = valid_ranks[rank]
-    raise ArgumentError.new("Invalid rank. Please try again.") unless guessed_rank
+    raise ArgumentError.new("Invalid rank. Try again.") unless guessed_rank
     raise ArgumentError.new("You don't have that rank. Try again.") unless self.hand.has_rank?(guessed_rank)
     self.guessed_ranks << guessed_rank
     received_cards = opponent.get_cards(guessed_rank)
-    if received_cards
-      self.hand.add_cards(received_cards)
+    self.handle_cards(received_cards)
+  rescue => e
+    puts e
+    retry
+  end
+
+  def handle_cards(cards)
+    if cards
+      self.hand.add_cards(cards)
       self.check_for_book
       self.turn_over = true if self.all_cards_guessed?
     else
       self.turn_over = true
     end
-  rescue => e
-    puts e
-    retry
+  end
+
+  def reset_guesses
+    self.guessed_ranks = []
   end
 
   def go_fish(deck)
@@ -43,6 +51,7 @@ class Player
   end
 
   def all_cards_guessed?
+    self.hand.cards.all? { |card| self.guessed_ranks.include?(card.value) }
   end
 
   def get_cards(value)
