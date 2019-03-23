@@ -5,6 +5,8 @@ class Hand
     Hand.new(deck.take(7))
   end
 
+  attr_accessor :cards
+
   def initialize(cards)
     @cards = cards
     sort_cards
@@ -14,13 +16,13 @@ class Hand
     cards.any? { |card| card.value == val }
   end
 
-  def add_cards(cards)
-    self.cards.concat(cards)
+  def add_cards(new_cards)
+    cards.concat(new_cards)
     sort_cards
   end
 
   def remove_cards(val)
-    removed_cards = @cards.select { |card| card.value == val }
+    removed_cards = cards.select { |card| card.value == val }
     cards.delete_if { |card| card.value == val }
     removed_cards.empty? ? nil : removed_cards
   end
@@ -47,10 +49,8 @@ class Hand
   end
 
   private
-  attr_accessor :cards
-
   def sort_cards
-    @cards.sort_by! { |card| Card.values.index(card.value) }
+    cards.sort_by! { |card| Card.values.index(card.value) }
   end
 
   def count_values

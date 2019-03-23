@@ -1,7 +1,7 @@
 require_relative 'hand'
 
 class Player
-  attr_reader :books
+  attr_reader :name, :books
   attr_accessor :hand
 
   def initialize(name)
@@ -27,6 +27,7 @@ class Player
       puts "#{@name} fished a #{fished_card[0].to_s}!"
       hand.add_cards(fished_card)
       check_for_book
+      sleep(1)
     else
       puts "The deck is empty and there are no cards to fish."
     end
@@ -46,7 +47,6 @@ class Player
   end
 
   private
-  attr_reader :name
   attr_writer :books
   attr_accessor :turn_over, :guessed_ranks
 

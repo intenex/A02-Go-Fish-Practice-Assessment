@@ -20,6 +20,7 @@ class Game
     attr_accessor :current_player
 
     def play_turn
+        system('clear')
         player = players[current_player]
         opponent = players[(current_player + 1) % 2]
         player.go_fish(deck) if player.hand.empty?
