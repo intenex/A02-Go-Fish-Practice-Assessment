@@ -9,6 +9,11 @@ class Hand
 
   def initialize(cards)
     @cards = cards
+    sort_cards
+  end
+
+  def sort_cards
+    @cards.sort_by! { |card| Card.values.index(card.value) }
   end
 
   def has_rank?(val)
@@ -27,7 +32,7 @@ class Hand
 
   def remove_book
     value_counter = self.count_values
-    book_value = value_counter.select { |value| value == 4 }
+    book_value = value_counter.select { |key, value| value == 4 }
     book_value.keys.each do |val|
       self.cards.delete_if { |card| card.value == val }
     end
@@ -35,7 +40,7 @@ class Hand
 
   def book?
     value_counter = self.count_values
-    value_counter.any? { |value| value == 4 }
+    value_counter.any? { |key, value| value == 4 }
   end
 
   def count_values
@@ -51,6 +56,6 @@ class Hand
   end
 
   def to_s
-    @cards.join(",") # unclear this works, test
+    @cards.join(", ")
   end
 end

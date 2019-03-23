@@ -45,14 +45,6 @@ class Card
     @suit, @value = suit, value
   end
 
-  # Compares two cards to see if they're equal in value but not suit.
-  # verify this works, also likely don't actually need this
-  def ==(other_card)
-    return false if other_card.nil?
-
-    self.send(:value) == other_card.send(:value)
-  end
-
   def to_s
     VALUE_STRINGS[value] + SUIT_STRINGS[suit]
   end
