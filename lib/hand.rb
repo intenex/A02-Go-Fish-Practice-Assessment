@@ -5,29 +5,29 @@ class Hand
     Hand.new(deck.take(7))
   end
 
-  attr_accessor :cards
-
   def initialize(cards)
     @cards = cards
     sort_cards
   end
 
-  def sort_cards
-    @cards.sort_by! { |card| Card.values.index(card.value) }
-  end
-
   def has_rank?(val)
-    @cards.any? { |card| card.value == val }
+    cards.any? { |card| card.value == val }
   end
 
   def add_cards(cards)
     self.cards.concat(cards)
+    sort_cards
   end
 
   def remove_cards(val)
     removed_cards = @cards.select { |card| card.value == val }
     cards.delete_if { |card| card.value == val }
     removed_cards.empty? ? nil : removed_cards
+  end
+
+  def book?
+    value_counter = count_values
+    value_counter.any? { |key, value| value == 4 }
   end
 
   def remove_book
@@ -38,9 +38,19 @@ class Hand
     end
   end
 
-  def book?
-    value_counter = count_values
-    value_counter.any? { |key, value| value == 4 }
+  def empty?
+    cards.empty?
+  end
+
+  def to_s
+    cards.join(", ")
+  end
+
+  private
+  attr_accessor :cards
+
+  def sort_cards
+    @cards.sort_by! { |card| Card.values.index(card.value) }
   end
 
   def count_values
@@ -49,13 +59,5 @@ class Hand
       value_counter[card.value] += 1
     end
     value_counter
-  end
-
-  def empty?
-    cards.empty?
-  end
-
-  def to_s
-    cards.join(", ")
   end
 end

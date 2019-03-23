@@ -19,18 +19,13 @@ class Deck
     @cards = cards
   end
 
-  # Returns the number of cards in the deck.
-  def count
-    @cards.count
-  end
-
   def empty?
     @cards.empty?
   end
 
   # Takes `n` cards from the top of the deck.
   def take(n)
-    raise "not enough cards" if count < n
+    raise "not enough cards" if @cards.count < n
     @cards.shift(n)
   end
 

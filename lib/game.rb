@@ -2,9 +2,6 @@ require_relative 'player'
 require_relative 'deck'
 
 class Game
-    attr_reader :deck, :players
-    attr_accessor :current_player
-
     def initialize(*names)
         @deck = Deck.new
         @deck.shuffle
@@ -18,13 +15,16 @@ class Game
         end_game
     end
 
+    private
+    attr_reader :deck, :players
+    attr_accessor :current_player
+
     def play_turn
         player = players[current_player]
         opponent = players[(current_player + 1) % 2]
         player.go_fish(deck) if player.hand.empty?
         player.request_cards(opponent) until player.turn_over?
         player.reset_turn
-        player.reset_guesses
         player.go_fish(deck)
         switch_players
     end
