@@ -45,14 +45,12 @@ class Card
     @suit, @value = suit, value
   end
 
-  # Compares two cards to see if they're equal in suit & value.
-  # Edit later to only compare value
+  # Compares two cards to see if they're equal in value but not suit.
+  # verify this works
   def ==(other_card)
     return false if other_card.nil?
 
-    [:suit, :value].all? do |attr|
-      self.send(attr) == other_card.send(attr)
-    end
+    self.send(:value) == other_card.send(:value)
   end
 
   def to_s
