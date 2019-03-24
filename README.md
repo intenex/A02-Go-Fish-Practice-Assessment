@@ -22,13 +22,12 @@ bundle exec rspec spec/player_spec.rb
 
 ## Game Rules
 
-* This is a two player version of Go Fish. The real version of the game may have many more players. In that version of the game, the key things to note are that a player may request any rank of card from any other player on their turn, and they may continue to request any rank of card (including the one they just requested) from any other player (including one they have already requested from) so long as they successfully continue to make a 'catch'/receive one or more cards from a player on every request.
+* This is a multiplayer version of Go Fish. If the game is played with three or fewer players, each player begins with 7 cards. If the game is played with more than three players, each player begins with 5 cards.
 * The goal of the game is to win the most 'books', or sets, of cards. A book of cards is any four of a kind of any value/rank of card, such as kings, jacks, 2s, etc.
-* Cards have ranks, with 2s having the lowest rank and Aces having the highest rank. Suits are not important in this game.
-* Each player is dealt seven cards (in this two-player version of the game - if there are more than three players, players are generally dealt five cards.).
-* A player can request any rank of card from the other player, such as all the kings from another player's hand, so long as they have at least one card of that rank in their hand. If the other player has any of the rank of card requested, they must hand over all the cards they have of that rank. If they do not, they tell the requesting player to "Go fish" and that player draws one card from the deck and places it in their hand.
-* If a player successfully requests one or more cards from the other player, they are entitled to continue their turn and asking that player again for any rank of card. As long as a player successfully continues to request cards, their turn continues.
+* Cards have ranks, with 2s having the lowest rank and aces having the highest rank. Suits are not important in this game.
+* A player can request any rank of card from any other player, such as all the kings from another player's hand, so long as they have at least one card of that rank in their hand. If the other player has any of the rank of card requested, they must hand over all the cards they have of that rank. If they do not, they tell the requesting player to "Go fish" and that player draws one card from the deck and places it in their hand.
+* If a player successfully requests one or more cards from another player, they are entitled to continue their turn and ask any player again for any rank of card that they currently hold at least one copy of. As long as a player successfully continues to request cards, their turn continues.
 * When a player gets a full book of four cards, they place it on the table in front of them and play again.
-* Once a player fails to successfully make a catch/request a card from the other player and has to 'go fishing' for a card in the deck, their turn ends and the turn passes to the other player.
-* The game ends when all thirteen books of cards have been claimed, or when there are no more cards in the deck and one of the players has an empty hand. The player with the most books wins.
-* If at any point a player has no cards in their hand, they may draw a card from the deck and ask the other player for any cards of the same rank as the card they drew.
+* Once a player fails to successfully make a catch/request a card from another player and has to 'go fishing' for a card in the deck, their turn ends and the turn passes to the next player.
+* The game ends when all thirteen books of cards have been claimed. The player with the most books wins.
+* If at any point a player has no cards in their hand, they may draw a card from the deck and ask the other player for any cards of the same rank as the card they drew. If there are no remaining cards in the deck, the player is out of the game.
