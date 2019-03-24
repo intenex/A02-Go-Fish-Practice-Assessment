@@ -66,4 +66,33 @@ describe Deck do
       end.to raise_error("not enough cards")
     end
   end
+
+  describe "#empty?" do
+    it "returns true if the deck is empty" do
+      deck = Deck.new([])
+      expect(deck.empty?).to be(true)
+    end
+
+    it "returns false if the deck is not empty" do
+      deck = Deck.new(cards)
+      expect(deck.empty?).to be(false)
+    end
+  end
+
+  describe "count" do
+    it "returns the number of cards in the deck" do
+      deck = Deck.new(cards)
+      expect(deck.count).to be(3)
+    end
+  end
+
+  describe "#shuffle" do
+    it "shuffles all the cards in the deck" do
+      original_cards = Deck.all_cards
+      deck = Deck.new(original_cards.dup)
+      deck.shuffle
+      expect(deck.instance_variable_get(:@cards)).to match_array(original_cards)
+      expect(deck.instance_variable_get(:@cards)).not_to eq(original_cards)
+    end
+  end
 end

@@ -38,14 +38,8 @@ class Card
   attr_reader :suit, :value
 
   def initialize(suit, value)
-    unless Card.suits.include?(suit) and Card.values.include?(value)
-      raise "illegal suit (#{suit}) or value (#{value})"
-    end
-
-    @suit, @value = suit, value
   end
 
   def to_s
-    VALUE_STRINGS[value] + SUIT_STRINGS[suit]
   end
 end

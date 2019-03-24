@@ -1,12 +1,12 @@
 require '00_card'
 require '02_hand'
 require '03_player'
-require '04_game'
 
 describe Player do
   subject(:player) do
     Player.new("Alice")
   end
+  let(:game) { double("game", :players => [Player.new("Alice"), Player.new("Bob"), Player.new("Charlie")]) }
 
   describe "#initialize" do
     it "assigns the name" do
@@ -143,19 +143,21 @@ describe Player do
   end
 
   describe "#request_cards" do
-    game = Game.new("Alice", "Bob", "Charlie")
-    alice = game.players.first
-    charlie = game.players.last
+    before(:each) do
+      @alice = game.players.first
+      @charlie = game.players.last
+    end
+
     it "calls #opponent_prompt and passes in an array of opponent players" do
-      expect(charlie).to receive(:opponent_prompt).with(game.players - [charlie]).and_return(game.players.first)
-      expect(charlie).to receive(:rank_prompt)
-      charlie.request_cards(game.players - [charlie])
+      expect(@charlie).to receive(:opponent_prompt).with(game.players - [@charlie]).and_return(game.players.first)
+      expect(@charlie).to receive(:rank_prompt)
+      @charlie.request_cards(game.players - [@charlie])
     end
 
     it "calls #rank_prompt and passes in the target player" do
-      expect(alice).to receive(:opponent_prompt).with(game.players - [alice]).and_return(game.players.last)
-      expect(alice).to receive(:rank_prompt).with(game.players.last)
-      alice.request_cards(game.players - [alice])
+      expect(@alice).to receive(:opponent_prompt).with(game.players - [@alice]).and_return(game.players.last)
+      expect(@alice).to receive(:rank_prompt).with(game.players.last)
+      @alice.request_cards(game.players - [@alice])
     end
   end
 
