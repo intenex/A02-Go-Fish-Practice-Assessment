@@ -1,4 +1,4 @@
-require_relative 'card'
+require_relative '00_card'
 
 # Represents a deck of playing cards.
 class Deck

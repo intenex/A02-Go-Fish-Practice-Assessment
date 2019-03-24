@@ -1,5 +1,5 @@
-require_relative 'player'
-require_relative 'deck'
+require_relative '01_deck'
+require_relative '03_player'
 
 class Game
     attr_reader :deck, :players, :finished_players

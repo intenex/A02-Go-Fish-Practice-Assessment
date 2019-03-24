@@ -1,5 +1,5 @@
-require 'card'
-require 'hand'
+require '00_card'
+require '02_hand'
 
 describe Hand do
   describe "::deal_from" do

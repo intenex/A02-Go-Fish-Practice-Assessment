@@ -1,4 +1,4 @@
-require_relative 'hand'
+require_relative '02_hand'
 
 class Player
   attr_reader :name

@@ -1,7 +1,7 @@
-require 'game'
-require 'card'
-require 'hand'
-require 'player'
+require '00_card'
+require '02_hand'
+require '03_player'
+require '04_game'
 
 describe Player do
   subject(:player) do

@@ -1,5 +1,5 @@
-require 'card'
-require 'deck'
+require '00_card'
+require '01_deck'
 
 describe Deck do
   describe "::all_cards" do

@@ -1,4 +1,4 @@
-require 'card'
+require '00_card'
 
 describe Card do
   describe '#initialize' do

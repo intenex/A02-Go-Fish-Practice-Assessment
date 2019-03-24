@@ -1,5 +1,5 @@
-require 'card'
-require 'game'
+require '00_card'
+require '04_game'
 
 describe Game do
   describe '#initialize' do
