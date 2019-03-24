@@ -62,11 +62,22 @@ describe Game do
   end
 
   describe "#check_players_out" do
-    it 'removes all players with empty hands from the @players array' do
-
+    it 'removes players with empty hands from the @players array' do
+      game = Game.new("Alice", "Bob", "Charlie")
+      expect(game.players.size).to be(3)
+      game.players[0].hand.instance_variable_set(:@cards, [])
+      game.check_players_out
+      expect(game.players.size).to be(2)
+      game.players[1].hand.instance_variable_set(:@cards, [])
+      game.check_players_out
+      expect(game.players.size).to be(1)
     end
 
-    it 'does not remove players that do not have empty hands'
+    it 'does not remove players that do not have empty hands' do
+      game = Game.new("Alice", "Bob", "Charlie")
+      game.check_players_out
+      expect(game.players.size).to be(3)
+    end
   end
 
   describe '#game_over?' do
@@ -94,6 +105,16 @@ describe Game do
   end
 
   describe '#winner' do
-    it 'returns the player with the most completed books'
+    it 'returns the player with the most completed books' do
+      game = Game.new("Alice", "Bob", "Charlie")
+      game.players[0].instance_variable_set(:@books, 2)
+      expect(game.winner).to eq(game.players[0])
+      game.players[1].instance_variable_set(:@books, 3)
+      expect(game.winner).to eq(game.players[1])
+      game.players[2].instance_variable_set(:@books, 1)
+      expect(game.winner).to eq(game.players[1])
+      game.players[2].instance_variable_set(:@books, 5)
+      expect(game.winner).to eq(game.players[2])
+    end
   end
 end
