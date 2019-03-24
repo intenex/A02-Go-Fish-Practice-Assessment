@@ -1,8 +1,8 @@
 require_relative 'hand'
 
 class Player
-  attr_reader :name
-  attr_accessor :hand, :books, :turn_over
+  attr_reader :name, :books
+  attr_accessor :hand
 
   def initialize(name)
     @name = name
@@ -40,6 +40,9 @@ class Player
     hand.remove_cards(value)
   end
 
+  private
+  attr_writer :books
+  attr_accessor :turn_over
 
   def opponent_prompt(opponents)
     puts "Your turn, #{name}. You have #{books} books."

@@ -23,13 +23,9 @@ class Deck
     @cards.empty?
   end
 
-  def count
-    @cards.count
-  end
-
   # Takes `n` cards from the top of the deck.
   def take(n)
-    raise "not enough cards" if count < n
+    raise "not enough cards" if @cards.count < n
     @cards.shift(n)
   end
 

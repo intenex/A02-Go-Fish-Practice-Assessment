@@ -66,32 +66,4 @@ describe Deck do
       end.to raise_error("not enough cards")
     end
   end
-
-  describe "#return" do
-    let(:more_cards) do
-      [ Card.new(:hearts, :four),
-        Card.new(:hearts, :five),
-        Card.new(:hearts, :six) ]
-    end
-
-    it "returns cards to the deck" do
-      deck.return(more_cards)
-      expect(deck.count).to eq(6)
-    end
-
-    it "does not destroy the passed array" do
-      more_cards_dup = more_cards.dup
-      deck.return(more_cards_dup)
-      expect(more_cards_dup).to eq(more_cards)
-    end
-
-    it "adds new cards to the bottom of the deck" do
-      deck.return(more_cards)
-      deck.take(3) # toss 3 cards away
-
-      expect(deck.take(1)).to eq(more_cards[0..0])
-      expect(deck.take(1)).to eq(more_cards[1..1])
-      expect(deck.take(1)).to eq(more_cards[2..2])
-    end
-  end
 end

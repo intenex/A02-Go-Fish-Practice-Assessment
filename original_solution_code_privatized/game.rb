@@ -2,9 +2,6 @@ require_relative 'player'
 require_relative 'deck'
 
 class Game
-    attr_reader :deck, :players, :finished_players
-    attr_accessor :current_player
-    
     def initialize(*names)
         @deck = Deck.new
         @deck.shuffle
@@ -20,6 +17,10 @@ class Game
         play_turn until game_over?
         end_game
     end
+
+    private
+    attr_reader :deck, :players, :finished_players
+    attr_accessor :current_player
 
     def play_turn
         system('clear')
