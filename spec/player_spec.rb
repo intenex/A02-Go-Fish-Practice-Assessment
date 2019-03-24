@@ -1,3 +1,4 @@
+require 'game'
 require 'card'
 require 'hand'
 require 'player'
@@ -138,6 +139,23 @@ describe Player do
       expect(player).to receive(:gets).and_return("3\n")
       player.rank_prompt(opponent)
       expect(player.turn_over?).to be(false)
+    end
+  end
+
+  describe "#request_cards" do
+    game = Game.new("Alice", "Bob", "Charlie")
+    alice = game.players.first
+    charlie = game.players.last
+    it "calls #opponent_prompt and passes in an array of opponent players" do
+      expect(charlie).to receive(:opponent_prompt).with(game.players - [charlie]).and_return(game.players.first)
+      expect(charlie).to receive(:rank_prompt)
+      charlie.request_cards(game.players - [charlie])
+    end
+
+    it "calls #rank_prompt and passes in the target player" do
+      expect(alice).to receive(:opponent_prompt).with(game.players - [alice]).and_return(game.players.last)
+      expect(alice).to receive(:rank_prompt).with(game.players.last)
+      alice.request_cards(game.players - [alice])
     end
   end
 
