@@ -121,26 +121,84 @@ describe Hand do
       end
     end
 
-    describe "#book" do
-      it "returns true if the hand contains a full book of cards"
+    describe "#book?" do
+      it "returns true if the hand contains a full book of cards" do
+        cards = [
+        Card.new(:hearts, :four),
+        Card.new(:diamonds, :four),
+        Card.new(:clubs, :four),
+        Card.new(:hearts, :ace),
+        Card.new(:spades, :four)
+        ]
+        hand = Hand.new(cards)
+        expect(hand.book?).to be(true)
+      end
 
-      it "returns false if the hand does not contain a full book of cards"
+      it "returns false if the hand does not contain a full book of cards" do
+        cards = [
+        Card.new(:hearts, :four),
+        Card.new(:diamonds, :four),
+        Card.new(:clubs, :four),
+        Card.new(:hearts, :ace),
+        Card.new(:spades, :five)
+        ]
+        hand = Hand.new(cards)
+        expect(hand.book?).to be(false)
+      end
     end
 
     describe "#remove_book" do
-      it "removes a book of cards from the hand if present"
+      it "removes a book of cards from the hand if present" do
+        cards = [
+        Card.new(:hearts, :four),
+        Card.new(:diamonds, :four),
+        Card.new(:clubs, :four),
+        Card.new(:hearts, :ace),
+        Card.new(:spades, :four)
+        ]
+        hand = Hand.new(cards.dup)
+        hand.remove_book
+        expect(hand.cards).to eq([cards[3]])
+      end
 
-      it "does nothing if no book of cards are present"
+      it "does nothing if no book of cards are present" do
+        cards = [
+        Card.new(:hearts, :four),
+        Card.new(:diamonds, :four),
+        Card.new(:clubs, :four),
+        Card.new(:hearts, :ace),
+        Card.new(:spades, :five)
+        ]
+        hand = Hand.new(cards.dup)
+        hand.remove_book
+        expect(hand.cards).to match_array(cards)
+      end
     end
 
     describe "#empty?" do
-      it "returns true if the hand is empty"
+      it "returns true if the hand is empty" do
+        hand = Hand.new([])
+        expect(hand.empty?).to be(true)
+      end
 
-      it "returns false if the hand is not empty"
+      it "returns false if the hand is not empty" do
+        hand = Hand.new([Card.new(:hearts, :four)])
+        expect(hand.empty?).to be(false)
+      end
     end
 
     describe "#to_s" do
-      it "returns a string representation of all the cards in the hand separated by a comma"
+      it "returns a string representation of all the cards in the hand" do
+        cards = [
+        Card.new(:hearts, :four),
+        Card.new(:diamonds, :four),
+        Card.new(:clubs, :four),
+        Card.new(:hearts, :ace),
+        Card.new(:spades, :five)
+        ]
+        hand = Hand.new(cards)
+        expect(hand.to_s).to include("4♥", "4♦", "4♣", "5♠", "A♥")
+      end
     end
   end
 end

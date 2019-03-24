@@ -1,3 +1,4 @@
+require 'deck'
 require 'game'
 
 describe Game do
@@ -12,7 +13,10 @@ describe Game do
       expect(game.deck.count).to eq(52)
     end
 
-    it 'shuffles the deck'
+    it 'shuffles the deck' do
+      expect(game.deck.cards).to match_array(Deck.all_cards.cards)
+      expect(game.deck.cards).not_to eq(Deck.all_cards.cards)
+    end
 
     it 'accepts an array of names and initializes an array of Player instances'
 
