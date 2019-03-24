@@ -117,4 +117,49 @@ describe Game do
       expect(game.winner).to eq(game.players[2])
     end
   end
+
+  describe "#play_turn" do
+    before(:each) do
+      @game = Game.new("Alice", "Bob")
+      expect(@game.players.first).to receive(:request_cards).twice
+      expect(@game.players.first).to receive(:turn_over?).and_return(false, false, true)
+    end
+
+    it 'calls #request_cards on the current player until their turn is over' do
+      @game.play_turn
+    end
+
+    it "calls Player#reset_turn after their turn is over" do
+      expect(@game.players.first).to receive(:reset_turn).once
+      @game.play_turn
+    end
+
+    it "calls Player#go_fish after their turn is over" do
+      expect(@game.players.first).to receive(:go_fish).once
+      @game.play_turn
+    end
+
+    it "switches players after a turn is over" do
+      expect(@game.current_player).to be(0)
+      @game.play_turn
+      expect(@game.current_player).to be(1)
+    end
+
+    it "removes players from the game if the deck is empty and a player has no cards" do
+      expect(@game.deck).to receive(:empty?).and_return(true, true, true)
+      expect(@game.players.first.hand).to receive(:empty?).and_return(true, true)
+      @game.play_turn
+      expect(@game.players.size).to be(1)
+      expect(@game.players.first.name).to eq("Bob")
+    end
+  end
+
+  describe "#play" do
+    game = Game.new("Alice", "Bob")
+    it "calls #play_turn until the game is over" do
+      expect(game).to receive(:play_turn).exactly(3).times
+      expect(game).to receive(:game_over?).and_return(false, false, false, true)
+      game.play
+    end
+  end
 end
