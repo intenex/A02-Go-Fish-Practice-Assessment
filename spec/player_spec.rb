@@ -85,7 +85,7 @@ describe Player do
 
   describe "#reset_turn" do
     it "causes #turn_over? to return false" do
-      player.send :turn_over=, true
+      player.instance_variable_set(:@turn_over, true)
       player.reset_turn
       expect(player.turn_over?).to be(false)
     end
