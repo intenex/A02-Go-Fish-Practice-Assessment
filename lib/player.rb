@@ -35,12 +35,11 @@ class Player
     self.turn_over = false
   end
 
-  protected
   def get_cards(value)
     hand.remove_cards(value)
   end
 
-
+  private
   def opponent_prompt(opponents)
     puts "Your turn, #{name}. You have #{books} books."
     puts "Your current hand: #{hand.to_s}"

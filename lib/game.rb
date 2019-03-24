@@ -4,7 +4,7 @@ require_relative 'deck'
 class Game
     attr_reader :deck, :players, :finished_players
     attr_accessor :current_player
-    
+
     def initialize(*names)
         @deck = Deck.new
         @deck.shuffle

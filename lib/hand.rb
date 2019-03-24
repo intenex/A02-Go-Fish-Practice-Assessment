@@ -48,6 +48,7 @@ class Hand
     cards.join(", ")
   end
 
+  private
   def sort_cards
     cards.sort_by! { |card| Card.values.index(card.value) }
   end
