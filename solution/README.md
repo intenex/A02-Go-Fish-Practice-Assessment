@@ -10,14 +10,14 @@
   this order:
 
 ```
-bundle exec rspec spec/card_spec.rb
-bundle exec rspec spec/deck_spec.rb
-bundle exec rspec spec/hand_spec.rb
-bundle exec rspec spec/player_spec.rb
-bundle exec rspec spec/game_spec.rb
+bundle exec rspec spec/00_card_spec.rb
+bundle exec rspec spec/01_deck_spec.rb
+bundle exec rspec spec/02_hand_spec.rb
+bundle exec rspec spec/03_player_spec.rb
+bundle exec rspec spec/04_game_spec.rb
 ```
 
-* To run one specific spec, add `:line_number` at the end.  For example, `bundle exec rspec spec/deck_spec.rb:30`
+* To run one specific spec, add `:line_number` at the end.  For example, `bundle exec rspec spec/01_deck_spec.rb:30`
 
 * Wait until you finish to run `rspec spec`, which will run all the
   tests. Do this as a final check that you have them all passing.
