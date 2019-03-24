@@ -1,8 +1,8 @@
 class Hand
   # This is a *factory method* that creates and returns a `Hand`
   # object.
-  def self.deal_from(deck)
-    Hand.new(deck.take(7))
+  def self.deal_from(deck, num)
+    Hand.new(deck.take(num))
   end
 
   attr_accessor :cards

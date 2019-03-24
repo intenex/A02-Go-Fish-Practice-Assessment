@@ -8,21 +8,15 @@ class Player
     @name = name
     @turn_over = false
     @books = 0
-    @guessed_ranks = []
   end
 
-  def request_cards(opponent)
-    puts "Your turn, #{name}. You have #{books} books."
-    puts "Your current hand: #{hand.to_s}"
-    puts "Choose a rank of card to request, e.g. '2', 'J', 'K'"
-    handle_input(gets.chomp.upcase, opponent)
-  rescue ArgumentError => e
-    puts e
-    retry
+  def request_cards(opponents)
+    opponent = opponent_prompt(opponents)
+    rank_prompt(opponent)
   end
 
   def go_fish(deck)
-    if !deck.empty?
+    unless deck.empty?
       fished_card = deck.take(1)
       puts "#{@name} fished a #{fished_card[0].to_s}!"
       hand.add_cards(fished_card)
@@ -33,45 +27,79 @@ class Player
     end
   end
 
-  def get_cards(value)
-    hand.remove_cards(value)
-  end
-
   def turn_over?
     turn_over
   end
 
   def reset_turn
     self.turn_over = false
-    reset_guesses
+  end
+
+  protected
+  def get_cards(value)
+    hand.remove_cards(value)
   end
 
   private
   attr_writer :books
-  attr_accessor :turn_over, :guessed_ranks
+  attr_accessor :turn_over
 
-  def handle_input(input, opponent)
+  def opponent_prompt(opponents)
+    puts "Your turn, #{name}. You have #{books} books."
+    puts "Your current hand: #{hand.to_s}"
+    puts "Choose a player to pick a card from by their number:"
+    player_string = "Players: "
+    opponents.each_with_index do |player, idx|
+      player_string += (idx.to_s + ': ' + player.name + ', ')
+    end
+    puts player_string[0...-2]
+    handle_opponent(gets.chomp.to_i, opponents)
+  rescue ArgumentError => e
+    puts e
+    retry
+  end
+
+  def rank_prompt(opponent)
+    system('clear')
+    puts "Your current hand: #{hand.to_s}"
+    puts "Choose a rank of card to request from #{opponent.name}, e.g. '2', 'J', 'K'"
+    handle_rank(gets.chomp.upcase, opponent)
+  rescue ArgumentError => e
+    puts e
+    sleep(1)
+    retry
+  end
+  
+  def handle_opponent(input, opponents)
+    opponent = opponents[input]
+    raise ArgumentError.new("That was not a valid choice. Try again.") unless opponent
+    opponent
+  end
+
+  def handle_rank(input, opponent)
     valid_ranks = Card::VALUE_STRINGS.invert
     guessed_rank = valid_ranks[input]
-    check_for_errors(guessed_rank)
-    guessed_ranks << guessed_rank
+    check_for_rank_errors(guessed_rank)
     received_cards = opponent.get_cards(guessed_rank)
     handle_cards(received_cards)
   end
 
-  def check_for_errors(guessed_rank)
+  def check_for_rank_errors(guessed_rank)
     raise ArgumentError.new("Invalid rank. Try again.") unless guessed_rank
     raise ArgumentError.new("You don't have that rank. Try again.") unless hand.has_rank?(guessed_rank)
-    raise ArgumentError.new("You already guessed that. Try again.") if guessed_ranks.include?(guessed_rank)
   end
 
   def handle_cards(cards)
     if cards
+      puts "#{name} caught #{cards.size} card[s]: #{cards.join(' ')}"
       hand.add_cards(cards)
       check_for_book
-      self.turn_over = true if all_cards_guessed?
+      self.turn_over = true if hand.empty?
+      sleep(1)
     else
+      puts "You didn't catch any cards. Go fish!"
       self.turn_over = true
+      sleep(1)
     end
   end
 
@@ -80,13 +108,5 @@ class Player
       hand.remove_book
       self.books += 1
     end
-  end
-
-  def all_cards_guessed?
-    hand.cards.all? { |card| guessed_ranks.include?(card.value) }
-  end
-
-  def reset_guesses
-    self.guessed_ranks = []
   end
 end
