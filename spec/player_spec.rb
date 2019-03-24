@@ -1,3 +1,5 @@
+require 'card'
+require 'hand'
 require 'player'
 
 describe Player do
@@ -19,17 +21,47 @@ describe Player do
     end
   end
 
-  describe "#request_cards" do # hard to test input, maybe just leave these in as givens
-  # actually sounds like total bullshit seems totally trivial to test what are they talking about
-  # https://stackoverflow.com/questions/23349863/testing-stdin-in-ruby
+  describe "#opponent_prompt" do 
+    opponents = [Player.new("Bob"), Player.new("Charlie"), Player.new("Daisy")]
+    it "asks the user for a target player to get cards from" do
+      expect(player).to receive(:gets).and_return("0\n")
+      player.opponent_prompt(opponents)
+    end
 
-    it "asks the user for a target player to get cards from"
+    it "raises an error when an invalid target player index is chosen" do
+      allow(player).to receive(:gets).and_return("4\n")
+      expect { player.opponent_prompt(opponents) }.to raise_error("That was not a valid choice. Try again.")
+    end
+  end
 
-    it "raises an error when an invalid target player index is chosen"
+  describe "#rank_prompt" do
+    opponent = Player.new("Bob")
+    player_cards = [
+      Card.new(:hearts, :four),
+      Card.new(:hearts, :three),
+      Card.new(:diamonds, :seven),
+      Card.new(:spades, :jack),
+      Card.new(:clubs, :king)
+    ]
+    opponent_cards = [
+      Card.new(:hearts, :deuce),
+      Card.new(:diamonds, :three),
+      Card.new(:clubs, :three),
+      Card.new(:spades, :four),
+      Card.new(:hearts, :ace)
+    ]
+    opponent.instance_variable_set(:@hand, Hand.new(opponent_cards))
+    it "asks the user for a rank of card to fish for" do
+      player.instance_variable_set(:@hand, Hand.new(player_cards))
+      expect(player).to receive(:gets).and_return("3\n")
+      player.rank_prompt(opponent)
+    end
 
-    it "asks the user for a rank of card to fish for"
-
-    it "raises an error when a player specifies an invalid rank of card"
+    it "raises an error when a player specifies an invalid rank of card" do
+      player.instance_variable_set(:@hand, Hand.new(player_cards))
+      allow(player).to receive(:gets).and_return("15\n")
+      expect { player.rank_prompt(opponent) }.to raise_error("Invalid rank. Try again.")
+    end
   end
 
   describe "#go_fish" do
@@ -78,9 +110,35 @@ describe Player do
   end
 
   describe "#turn_over?" do
-    it "returns true if the player has failed a catch"
+    opponent = Player.new("Bob")
+    player_cards = [
+      Card.new(:hearts, :four),
+      Card.new(:hearts, :three),
+      Card.new(:diamonds, :seven),
+      Card.new(:spades, :jack),
+      Card.new(:clubs, :king)
+    ]
+    opponent_cards = [
+      Card.new(:hearts, :deuce),
+      Card.new(:diamonds, :three),
+      Card.new(:clubs, :three),
+      Card.new(:spades, :four),
+      Card.new(:hearts, :ace)
+    ]
+    opponent.instance_variable_set(:@hand, Hand.new(opponent_cards))
+    it "returns true if the player has failed a catch" do
+      player.instance_variable_set(:@hand, Hand.new(player_cards))
+      expect(player).to receive(:gets).and_return("7\n")
+      player.rank_prompt(opponent)
+      expect(player.turn_over?).to be(true)
+    end
 
-    it "returns false if the player has successfully made a catch"
+    it "returns false if the player has successfully made a catch" do
+      player.instance_variable_set(:@hand, Hand.new(player_cards))
+      expect(player).to receive(:gets).and_return("3\n")
+      player.rank_prompt(opponent)
+      expect(player.turn_over?).to be(false)
+    end
   end
 
   describe "#reset_turn" do

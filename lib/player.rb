@@ -39,7 +39,6 @@ class Player
     hand.remove_cards(value)
   end
 
-  private
   def opponent_prompt(opponents)
     puts "Your turn, #{name}. You have #{books} books."
     puts "Your current hand: #{hand.to_s}"
@@ -50,9 +49,6 @@ class Player
     end
     puts player_string[0...-2]
     handle_opponent(gets.chomp.to_i, opponents)
-  rescue ArgumentError => e
-    puts e
-    retry
   end
 
   def rank_prompt(opponent)
@@ -60,10 +56,6 @@ class Player
     puts "Your current hand: #{hand.to_s}"
     puts "Choose a rank of card to request from #{opponent.name}, e.g. '2', 'J', 'K'"
     handle_rank(gets.chomp.upcase, opponent)
-  rescue ArgumentError => e
-    puts e
-    sleep(1)
-    retry
   end
   
   def handle_opponent(input, opponents)
